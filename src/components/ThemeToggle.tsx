@@ -45,7 +45,7 @@ export function ThemeToggle() {
       >
         <ThemeIcon effectiveTheme={effectiveTheme} />
       </span>
-      <div className="relative flex min-w-32" ref={ref}>
+      <div className="relative flex min-w-0 sm:min-w-32" ref={ref}>
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}

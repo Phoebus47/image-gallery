@@ -5,28 +5,34 @@ import { cn } from '@/lib/utils';
 export interface HashtagFilterProps {
   activeHashtag: string | null;
   onClear: () => void;
+  /** Optional root class (e.g. w-full for bottom bar on mobile) */
+  className?: string;
 }
 
 export function HashtagFilter({
   activeHashtag,
   onClear,
+  className,
 }: Readonly<HashtagFilterProps>) {
   if (!activeHashtag) return null;
 
   return (
     <motion.output
       className={cn(
-        'inline-flex items-center gap-3',
-        'rounded-full border border-filter-border bg-filter-bg px-4 py-2',
+        'inline-flex min-w-0 max-w-[50vw] shrink items-center gap-2 sm:gap-3',
+        'rounded-full border border-filter-border bg-filter-bg px-3 py-2 sm:px-4',
         'shadow-(--shadow-sm)',
+        className,
       )}
       aria-live="polite"
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
     >
-      <span className="text-sm text-text-secondary">{LABELS.filteringBy}</span>
-      <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-tag-active-text">
+      <span className="shrink-0 text-sm text-text-secondary">
+        {LABELS.filteringBy}
+      </span>
+      <span className="min-w-0 truncate rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-tag-active-text">
         {activeHashtag}
       </span>
       <button

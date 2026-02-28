@@ -162,8 +162,8 @@ export function GalleryClient() {
           navVisible ? 'translate-y-0' : '-translate-y-full',
         )}
       >
-        <div className="mx-auto flex max-w-(--page-max-width) items-center justify-between px-6 py-4 lg:px-8">
-          <h1 className="flex items-center">
+        <div className="mx-auto flex max-w-(--page-max-width) items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
+          <h1 className="flex min-w-0 shrink-0 items-center">
             <Image
               src={LOGO_SRC}
               alt={LABELS.galleryTitle}
@@ -175,12 +175,14 @@ export function GalleryClient() {
             />
           </h1>
 
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 shrink items-center justify-end gap-2 sm:gap-3">
             <ThemeToggle />
-            <HashtagFilter
-              activeHashtag={activeHashtag}
-              onClear={onClearFilter}
-            />
+            <div className="hidden sm:block">
+              <HashtagFilter
+                activeHashtag={activeHashtag}
+                onClear={onClearFilter}
+              />
+            </div>
             <span className="hidden text-sm text-text-secondary sm:block">
               {LABELS.browseFilterHint}
             </span>
@@ -188,7 +190,22 @@ export function GalleryClient() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-(--page-max-width) px-6 py-8 lg:px-8 lg:py-10">
+      {activeHashtag && (
+        <section
+          className="fixed bottom-6 left-4 z-40 sm:hidden"
+          aria-label={LABELS.browseFilterHint}
+        >
+          <div className="rounded-full border border-border-primary bg-surface-primary/95 shadow-(--shadow-lg) backdrop-blur-md">
+            <HashtagFilter
+              activeHashtag={activeHashtag}
+              onClear={onClearFilter}
+              className="max-w-[60vw]"
+            />
+          </div>
+        </section>
+      )}
+
+      <main className="mx-auto max-w-(--page-max-width) px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
         {renderMainContent()}
       </main>
 

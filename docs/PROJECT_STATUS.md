@@ -1,6 +1,6 @@
 # Project Status – Image Gallery SPA
 
-**Last updated:** February 28, 2026  
+**Last updated:** March 1, 2026  
 **Deadline:** March 1, 2026, 8:00 PM  
 **Submit to:** See PRD §6
 
@@ -66,7 +66,8 @@
 - BackToTop, Footer
 - Ripple on hashtag click, card stagger (Framer Motion), shimmer loading
 - Nav hides on scroll down, shows on scroll up (useScrollDirection)
-- Sticky HashtagFilter
+- Sticky HashtagFilter (header on sm+; on mobile, floating pill bottom-left when filter active, `<section aria-label>`)
+- Responsive: overflow-x-hidden, min-w-0/shrink to avoid horizontal scroll; reduced padding/gap on small screens
 
 ### 4. Data & API
 
@@ -87,8 +88,8 @@
 
 ### 6. Tests
 
-- **Unit:** 22 test files, 117 tests (Vitest + RTL), coverage 100%
-- **E2E:** Playwright (test:e2e) – 6 tests (gallery, filter, clear, lightbox, back-to-top, infinite scroll); test:e2e:report to open HTML report
+- **Unit:** 22 test files, 118 tests (Vitest + RTL), coverage 100%
+- **E2E:** Playwright (test:e2e) – 8 tests (gallery, filter, clear, lightbox, back-to-top, infinite scroll, mobile floating filter pill, theme toggle data-theme). Timeouts used for initial load and smooth-scroll where needed. test:e2e:report to open HTML report.
 - Covered: GalleryCard, ImageGrid, HashtagFilter, ThemeToggle, Lightbox, BackToTop, Footer, GalleryClient, page, layout, API route, hooks (infinite-scroll, image-pool, gallery-filter, masonry, responsive-columns, scroll-direction, use-theme), mock-data, utils, db
 
 ### 7. Code quality

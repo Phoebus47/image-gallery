@@ -1,6 +1,6 @@
 # Image Gallery SPA
 
-**Last updated:** February 28, 2026
+**Last updated:** March 1, 2026
 
 Single-Page Application for displaying an image gallery with infinite scroll and keyword filtering.
 
@@ -16,7 +16,7 @@ Single-Page Application for displaying an image gallery with infinite scroll and
 - **Interactive Lightbox** – Full-screen modal with Next/Prev navigation, keyboard support (Arrow keys/ESC), and zoom transitions.
 - **Performance Optimized** – LCP priority loading, skeleton states, and hardware-accelerated transitions.
 - **Infinite Scroll** – Intelligent loading with smooth sentinel detection and animated feedback.
-- **Keyword Filtering** – Dynamic active filtering with frosted-glass sticky header for constant accessibility.
+- **Keyword Filtering** – Dynamic active filtering; on desktop in header, on mobile a floating pill (section) bottom-left when a filter is active.
 - **Micro-interactions** – Ripple effects on hashtag clicks and subtle card entrance animations for elite feedback.
 
 ## Tech Stack

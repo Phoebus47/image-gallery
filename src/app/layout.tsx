@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${inter.variable} antialiased overflow-x-hidden`}>
         <script
           dangerouslySetInnerHTML={{ __html: themeScript }}
           suppressHydrationWarning

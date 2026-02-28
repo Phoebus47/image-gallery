@@ -64,7 +64,7 @@ export function ImageGrid({
 
   return (
     <motion.ul
-      className="flex list-none gap-5 p-0"
+      className="flex list-none gap-3 p-0 sm:gap-5"
       aria-label={LABELS.ariaImageGrid}
       data-testid="image-grid"
       initial="hidden"
@@ -76,7 +76,7 @@ export function ImageGrid({
           key={
             column.length > 0 ? `col-${column[0].id}` : `col-empty-${colIndex}`
           }
-          className="flex flex-1 flex-col"
+          className="flex min-w-0 flex-1 flex-col"
         >
           {column.map((image, imgIndex) => {
             const globalIndex = colIndex + imgIndex * columnCount;

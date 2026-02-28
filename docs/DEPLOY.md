@@ -1,6 +1,6 @@
 # Deployment Guide
 
-**Last updated:** February 28, 2026
+**Last updated:** March 1, 2026
 
 This app is **deployed on Vercel**. The live URL is in [docs/PROJECT_STATUS.md](./PROJECT_STATUS.md). Below are options for running locally or self-hosted.
 

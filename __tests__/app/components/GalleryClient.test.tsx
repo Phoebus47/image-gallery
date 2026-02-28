@@ -19,6 +19,11 @@ vi.mock('@/lib/hooks/use-scroll-direction', () => ({
   useScrollDirection: () => mockUseScrollDirection(),
 }));
 
+const mockUseGalleryFilter = vi.fn();
+vi.mock('@/lib/hooks/use-gallery-filter', () => ({
+  useGalleryFilter: () => mockUseGalleryFilter(),
+}));
+
 // Mock components to isolate GalleryClient orchestration logic
 vi.mock('@/components/ImageGrid', () => ({
   ImageGrid: ({ images, onImageClick }: any) => (
@@ -60,6 +65,15 @@ describe('GalleryClient Logic Verification', () => {
 
   afterEach(() => {
     cleanup();
+  });
+
+  beforeEach(() => {
+    mockUseGalleryFilter.mockReturnValue({
+      activeHashtag: null,
+      filter: () => true,
+      onHashtagClick: vi.fn(),
+      onClearFilter: vi.fn(),
+    });
   });
 
   it('hides header when scroll direction hook returns false', () => {
@@ -121,5 +135,25 @@ describe('GalleryClient Logic Verification', () => {
     });
     rerender(<GalleryClient />);
     expect(screen.getByText(/Try selecting/i)).toBeInTheDocument();
+  });
+
+  it('renders mobile floating filter pill when activeHashtag is set', () => {
+    mockUseGalleryFilter.mockReturnValue({
+      activeHashtag: 'travel',
+      filter: (img: { hashtags: string[] }) => img.hashtags.includes('travel'),
+      onHashtagClick: vi.fn(),
+      onClearFilter: vi.fn(),
+    });
+    mockUseImagePool.mockReturnValue({ images: [], isLoading: false });
+    mockUseInfiniteScroll.mockReturnValue({
+      images: [],
+      hasMore: false,
+      sentinelRef: { current: null },
+    });
+    mockUseScrollDirection.mockReturnValue(true);
+    render(<GalleryClient />);
+    const region = screen.getByRole('region', { name: /browse & filter/i });
+    expect(region).toBeInTheDocument();
+    expect(region).toHaveClass('fixed', 'bottom-6', 'left-4');
   });
 });

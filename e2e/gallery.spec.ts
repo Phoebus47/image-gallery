@@ -10,7 +10,10 @@ test.describe('Image Gallery', () => {
     await expect(
       page.getByRole('heading', { name: /image gallery/i }),
     ).toBeVisible();
-    await expect(page.getByRole('list', { name: /image grid/i })).toBeVisible();
+    // Wait for initial fetch + render (list appears after useImagePool resolves)
+    await expect(page.getByRole('list', { name: /image grid/i })).toBeVisible({
+      timeout: 15_000,
+    });
     await expect(
       page.getByRole('button', { name: /view.*full screen/i }).first(),
     ).toBeVisible();
@@ -56,9 +59,12 @@ test.describe('Image Gallery', () => {
 
   test('back-to-top button appears on scroll and scrolls to top when clicked', async ({
     page,
-  }) => {
+  }, testInfo) => {
+    testInfo.setTimeout(45_000); // smooth scroll + waits may need extra time
     await page.goto('/');
-    await expect(page.getByRole('list', { name: /image grid/i })).toBeVisible();
+    await expect(page.getByRole('list', { name: /image grid/i })).toBeVisible({
+      timeout: 15_000,
+    });
 
     await page.evaluate(() => window.scrollTo(0, 800));
     await expect(
@@ -68,7 +74,8 @@ test.describe('Image Gallery', () => {
     await page
       .getByRole('button', { name: /back to top/i })
       .click({ force: true });
-    await page.waitForFunction(() => window.scrollY < 100, { timeout: 5000 });
+    // Smooth scroll can take several seconds on a long page
+    await page.waitForFunction(() => window.scrollY < 100, { timeout: 15_000 });
     const scrollY = await page.evaluate(() => window.scrollY);
     expect(scrollY).toBeLessThan(100);
   });
@@ -90,5 +97,43 @@ test.describe('Image Gallery', () => {
     expect(
       afterScrollCards > initialCards || (await reachedEnd.isVisible()),
     ).toBeTruthy();
+  });
+
+  test('mobile viewport shows floating filter pill when hashtag is selected', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/');
+    await expect(page.getByRole('list', { name: /image grid/i })).toBeVisible();
+
+    const firstHashtag = page.getByRole('button', { name: /^#/ }).first();
+    await firstHashtag.click();
+
+    const filterSection = page.getByRole('region', {
+      name: /browse & filter by hashtags/i,
+    });
+    await expect(filterSection).toBeVisible();
+    await expect(filterSection).toHaveClass(/fixed/);
+  });
+
+  test('theme toggle updates document data-theme', async ({ page }) => {
+    await page.goto('/');
+
+    const themeTrigger = page.getByRole('button', {
+      name: /theme \(light, dark, or system\)/i,
+    });
+    await themeTrigger.click();
+    await page.getByRole('menuitem', { name: /^dark$/i }).click();
+
+    await expect(
+      page.evaluate(() => document.documentElement.getAttribute('data-theme')),
+    ).resolves.toBe('dark');
+
+    await themeTrigger.click();
+    await page.getByRole('menuitem', { name: /^light$/i }).click();
+
+    await expect(
+      page.evaluate(() => document.documentElement.getAttribute('data-theme')),
+    ).resolves.toBe('light');
   });
 });

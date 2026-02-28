@@ -5,7 +5,12 @@ import { motion } from 'framer-motion';
 import { BACK_TO_TOP_VISIBLE_SCROLL_Y, LABELS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
-export function BackToTop() {
+export interface BackToTopProps {
+  /** Optional: raise button when e.g. mobile bottom bar is visible (e.g. bottom-20 sm:bottom-6) */
+  className?: string;
+}
+
+export function BackToTop({ className }: Readonly<BackToTopProps> = {}) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -27,6 +32,7 @@ export function BackToTop() {
       onClick={scrollToTop}
       className={cn(
         'fixed bottom-6 right-6 z-40 cursor-pointer',
+        className,
         'flex h-11 w-11 items-center justify-center rounded-full',
         'border border-border-primary bg-surface-primary text-text-secondary',
         'shadow-(--shadow-lg)',

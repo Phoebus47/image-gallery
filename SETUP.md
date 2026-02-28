@@ -1,6 +1,6 @@
 # Setup Guide – Image Gallery SPA
 
-**Last updated:** February 28, 2026
+**Last updated:** March 1, 2026
 
 Step-by-step project setup guide (run `npx create` yourself). The app is also **deployed on Vercel**: [https://image-gallery-thanakrit-thanyawatsa.vercel.app/](https://image-gallery-thanakrit-thanyawatsa.vercel.app/).
 

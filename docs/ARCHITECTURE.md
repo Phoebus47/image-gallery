@@ -1,6 +1,6 @@
 # Image Gallery SPA – Architecture
 
-**Last updated:** February 28, 2026
+**Last updated:** March 1, 2026
 
 ## Overview
 
@@ -49,8 +49,8 @@ flowchart TB
 ```
 page.tsx (Server)
 └── GalleryClient (Client)
-    ├── header (logo; ThemeToggle; visibility from useScrollDirection)
-    ├── HashtagFilter
+    ├── header (logo; ThemeToggle; HashtagFilter on sm+; visibility from useScrollDirection)
+    ├── section (mobile only: floating filter pill bottom-left when active, aria-label)
     ├── ImageGrid (ul/li)
     │   └── GalleryCard (×N)
     ├── Lightbox
@@ -114,8 +114,8 @@ src/
 
 ## Testing Strategy
 
-- **Unit (Vitest + RTL):** 22 test files, 117 tests, coverage 100%. Run `npm run test` or `npm run test:ci`.
-- **E2E (Playwright):** 6 tests – gallery load, filter, clear filter, lightbox, back-to-top, infinite scroll. Run `npm run test:e2e`; `npm run test:e2e:report` to open HTML report.
+- **Unit (Vitest + RTL):** 22 test files, 118 tests, coverage 100%. Run `npm run test` or `npm run test:ci`.
+- **E2E (Playwright):** 8 tests – gallery load, filter, clear filter, lightbox, back-to-top, infinite scroll, mobile floating filter pill, theme toggle (data-theme). Run `npm run test:e2e`; `npm run test:e2e:report` to open HTML report.
 - **Performance:** Masonry stagger uses capped delay and respects `prefers-reduced-motion`.
 
 ## API & Database
