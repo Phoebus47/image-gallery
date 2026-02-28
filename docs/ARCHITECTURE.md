@@ -8,6 +8,8 @@ The Image Gallery is a client-side Single-Page Application built with Next.js 16
 
 ## High-Level Architecture
 
+The diagram below illustrates the application architecture (client, data layer, and flow). It satisfies the optional diagram for architecture and deployment described in the assignment.
+
 ```mermaid
 flowchart TB
     subgraph Client["Browser (Client)"]
@@ -119,8 +121,10 @@ src/
 - **GET /api/images** – Returns all images from MySQL (Prisma). Falls back to mock if DB unavailable.
 - **Prisma + MySQL** – `Image` and `Hashtag` models. Seed: `npm run db:seed`.
 
-## Deployment
+## Deployment & Production
 
-- **Vercel**: App is deployed on Vercel. [Live](https://image-gallery-thanakrit-thanyawatsa.vercel.app/). Optional: add `DATABASE_URL` (PlanetScale/Neon) in Vercel for real DB.
-- **Docker**: `docker compose up -d` – App + MySQL locally. See [docs/DEPLOY.md](./DEPLOY.md).
-- **Ubuntu + PM2**: See ecosystem.config.cjs and [docs/DEPLOY.md](./DEPLOY.md).
+- **Vercel**: Deployed on Vercel (serverless). [Live](https://image-gallery-thanakrit-thanyawatsa.vercel.app/). Optional: add `DATABASE_URL` (PlanetScale/Neon) for real DB.
+- **Docker**: `docker compose up -d` – App (Node 20 Alpine, Next.js standalone) + MySQL 8. See [docs/DEPLOY.md](./DEPLOY.md).
+- **Self-host (PM2)**: Node 20, Ubuntu 22.04 LTS or equivalent; minimum 1 vCPU, 1 GB RAM. See ecosystem.config.cjs and [docs/DEPLOY.md](./DEPLOY.md).
+
+Full server specifications, OS/software, and deployment steps are in [docs/DEPLOY.md](./DEPLOY.md).

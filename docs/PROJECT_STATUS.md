@@ -19,6 +19,21 @@
 
 ---
 
+## Test assignment compliance (6/6)
+
+| #   | Requirement                                                   | Implementation                                                                                                                                                                  |
+| --- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Gallery page with images and hashtags per image               | `GalleryClient`, `ImageGrid`, `GalleryCard`; each card shows image + hashtag list                                                                                               |
+| 2   | Show at most x images initially; load more on scroll          | `useInfiniteScroll`, sentinel, `PAGE_SIZE`/`INITIAL_LOAD_COUNT` = 12; load more when sentinel visible                                                                           |
+| 3   | Variable image sizes; unlimited hashtags per image            | Masonry layout (`useMasonryColumns`, `useResponsiveColumns`); per-image `hashtags: string[]`                                                                                    |
+| 4   | Click hashtag → filter gallery to that tag only               | `useGalleryFilter`, `HashtagFilter` (active tag + clear); filter applied to displayed list                                                                                      |
+| 5   | placehold.co placeholders; sample hashtags for testing        | `mock-images.ts` uses placehold.co URLs; varied hashtags for demo and review                                                                                                    |
+| 6   | Architecture + production tech (server, OS, deploy) + diagram | [docs/ARCHITECTURE.md](./ARCHITECTURE.md) (Mermaid diagram, stack, data flow); [docs/DEPLOY.md](./DEPLOY.md) (server specs, Node 20, Alpine/Ubuntu, MySQL 8, Vercel/Docker/PM2) |
+
+**Extras:** Framework (Next.js); full source submitted; live URL for testing (Vercel); layout and styling at author’s choice.
+
+---
+
 ## Done
 
 ### 1. Setup & infrastructure
