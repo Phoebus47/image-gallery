@@ -15,7 +15,7 @@ export function Footer() {
           height={LOGO_HEIGHT}
           className="h-6 w-auto object-contain opacity-90"
         />
-        <span className="text-xs text-text-tertiary">
+        <span className="text-xs text-text-secondary">
           {LABELS.footerCopyright}
         </span>
       </div>

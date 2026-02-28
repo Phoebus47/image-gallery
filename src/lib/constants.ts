@@ -7,7 +7,7 @@ export const LABELS = {
   clearFilter: 'Clear filter',
   imageUnavailable: 'Image Unavailable',
   footerBrand: 'Image Gallery',
-  footerCopyright: '© 2026. Built with Next.js.',
+  footerCopyright: '© 2026 Thanakrit Thanyawatsakul. All rights reserved.',
   loadingGallery: 'Loading gallery...',
   tryDifferentHashtag: 'Try selecting a different hashtag',
   reachedEnd: "You've reached the end",
@@ -38,6 +38,6 @@ export const SCROLL_SENTINEL_THRESHOLD = 0.1;
 export const BACK_TO_TOP_VISIBLE_SCROLL_Y = 600;
 
 /** Logo image (public path) */
-export const LOGO_SRC = '/image-gallery-icon.png';
+export const LOGO_SRC = '/image-gallery-icon.webp';
 export const LOGO_WIDTH = 240;
 export const LOGO_HEIGHT = 60;

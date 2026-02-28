@@ -43,7 +43,7 @@ export function GalleryCard({
   return (
     <article
       className={cn(
-        'animate-card-in mb-5 [content-visibility:auto]',
+        'animate-card-in mb-5',
         'group overflow-hidden',
         'rounded-(--card-radius) border border-card-border bg-card-bg',
         'shadow-(--shadow-md)',
@@ -52,10 +52,17 @@ export function GalleryCard({
       )}
       data-testid="gallery-card"
     >
-      {/* Image container — clickable for lightbox */}
+      {/* Image container — clickable for lightbox; --card-aspect reserves space to reduce CLS. Exception: style only for dynamic CSS var (aspect ratio from props); see CODING_STANDARDS §2. */}
       <button
         type="button"
-        className="relative w-full cursor-zoom-in overflow-hidden bg-muted/10 min-h-25 text-left border-0 p-0"
+        className="relative w-full cursor-zoom-in overflow-hidden bg-muted/10 min-h-25 text-left border-0 p-0 aspect-(--card-aspect,4/3) disabled:pointer-events-none disabled:opacity-60"
+        style={
+          hasError
+            ? undefined
+            : ({
+                ['--card-aspect' as string]: `${image.width}/${image.height}`,
+              } as React.CSSProperties)
+        }
         onClick={() => !hasError && onImageClick(image)}
         disabled={hasError}
         aria-label={LABELS.getAriaViewInFullScreen(image.alt)}
@@ -95,16 +102,17 @@ export function GalleryCard({
               onLoad={() => setIsLoaded(true)}
               onError={() => setHasError(true)}
               className={cn(
-                'block h-auto w-full object-cover transition-all duration-700 ease-out will-change-transform group-hover:scale-[1.03]',
+                'absolute inset-0 block h-full w-full object-cover transition-all duration-700 ease-out will-change-transform group-hover:scale-[1.03]',
                 isLoaded ? 'animate-image-in' : 'opacity-0',
               )}
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               priority={priority}
+              fetchPriority={priority ? 'high' : 'auto'}
               unoptimized
             />
             {/* View Icon Overlay (Affordance) */}
             <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10 flex items-center justify-center opacity-0 group-hover:opacity-100">
-              <div className="p-3 rounded-full bg-white/20 backdrop-blur-md text-white animate-overlay-in">
+              <div className="p-3 rounded-full bg-white/25 text-white animate-overlay-in">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"

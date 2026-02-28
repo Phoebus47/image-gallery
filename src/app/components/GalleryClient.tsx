@@ -110,7 +110,7 @@ export function GalleryClient() {
         {hasMore ? (
           <div
             ref={sentinelRef}
-            className="flex items-center justify-center gap-1.5 py-12"
+            className="flex min-h-24 items-center justify-center gap-1.5 py-12"
             aria-hidden
           >
             <span className="animate-pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-accent" />
@@ -118,11 +118,11 @@ export function GalleryClient() {
             <span className="animate-pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-accent [animation-delay:0.3s]" />
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-20 border-t border-border-subtle mt-10">
+          <div className="flex min-h-24 flex-col items-center justify-center border-t border-border-subtle py-12 mt-10">
             <div className="text-xs font-bold tracking-[0.2em] text-text-tertiary uppercase">
               {LABELS.reachedEnd}
             </div>
-            <div className="mt-2 text-sm text-text-tertiary opacity-40">
+            <div className="mt-2 text-sm text-text-tertiary">
               {LABELS.discoveringBeauty}
             </div>
           </div>
@@ -152,7 +152,7 @@ export function GalleryClient() {
               activeHashtag={activeHashtag}
               onClear={onClearFilter}
             />
-            <span className="hidden text-sm text-text-tertiary sm:block">
+            <span className="hidden text-sm text-text-secondary sm:block">
               {LABELS.browseFilterHint}
             </span>
           </div>
