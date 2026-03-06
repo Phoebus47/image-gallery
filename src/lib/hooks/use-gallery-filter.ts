@@ -3,14 +3,17 @@ import type { ImageItem } from '@/lib/data/mock-images';
 
 export function useGalleryFilter() {
   const [activeHashtag, setActiveHashtag] = useState<string | null>(null);
+  const [squareFilter, setSquareFilter] = useState<boolean>(false);
 
-  const filter = useMemo(
-    () =>
-      activeHashtag
-        ? (img: ImageItem) => img.hashtags.includes(activeHashtag)
-        : () => true,
-    [activeHashtag],
-  );
+  const filter = useMemo(() => {
+    return (img: ImageItem) => {
+      const matchesHashtag = activeHashtag
+        ? img.hashtags.includes(activeHashtag)
+        : true;
+      const matchesSquare = squareFilter ? img.width === img.height : true;
+      return matchesHashtag && matchesSquare;
+    };
+  }, [activeHashtag, squareFilter]);
 
   const onHashtagClick = useCallback((tag: string) => {
     setActiveHashtag((current) => (current === tag ? null : tag));
@@ -20,5 +23,16 @@ export function useGalleryFilter() {
     setActiveHashtag(null);
   }, []);
 
-  return { activeHashtag, filter, onHashtagClick, onClearFilter };
+  const onSquareFilterClick = useCallback(() => {
+    setSquareFilter((current) => !current);
+  }, []);
+
+  return {
+    activeHashtag,
+    filter,
+    onHashtagClick,
+    onClearFilter,
+    squareFilter,
+    onSquareFilterClick,
+  };
 }

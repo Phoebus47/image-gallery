@@ -22,6 +22,8 @@ export const LABELS = {
   ariaNextImage: 'Next image',
   getAriaLightboxDetails: (alt: string) => `${alt} and details`,
   getAriaViewInFullScreen: (alt: string) => `View ${alt} in full screen`,
+  ariaSquareFilter: 'Show square images only',
+  titleSquareFilter: 'Square only',
   ariaThemeToggle: 'Theme (light, dark, or system)',
   themeLight: 'Light',
   themeDark: 'Dark',

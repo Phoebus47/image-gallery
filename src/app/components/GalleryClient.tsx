@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { BackToTop } from '@/components/BackToTop';
 import { Footer } from '@/components/Footer';
 import { HashtagFilter } from '@/components/HashtagFilter';
+import { SquareFilterButton } from '@/components/SquareFilterButton';
 import { ImageGrid } from '@/components/ImageGrid';
 import { Lightbox } from '@/components/Lightbox';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -26,8 +27,14 @@ import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
 export function GalleryClient() {
-  const { activeHashtag, filter, onHashtagClick, onClearFilter } =
-    useGalleryFilter();
+  const {
+    activeHashtag,
+    filter,
+    onHashtagClick,
+    onClearFilter,
+    squareFilter,
+    onSquareFilterClick,
+  } = useGalleryFilter();
   const { images: pool, isLoading: poolLoading } = useImagePool();
 
   const { images, hasMore, sentinelRef } = useInfiniteScroll({
@@ -177,6 +184,10 @@ export function GalleryClient() {
 
           <div className="flex min-w-0 shrink items-center justify-end gap-2 sm:gap-3">
             <ThemeToggle />
+            <SquareFilterButton
+              squareFilter={squareFilter}
+              onSquareFilterClick={onSquareFilterClick}
+            />
             <div className="hidden sm:block">
               <HashtagFilter
                 activeHashtag={activeHashtag}
