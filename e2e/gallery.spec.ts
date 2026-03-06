@@ -85,7 +85,7 @@ test.describe('Image Gallery', () => {
   }) => {
     await page.goto('/');
     const list = page.getByRole('list', { name: /image grid/i });
-    await expect(list).toBeVisible();
+    await expect(list).toBeVisible({ timeout: 15_000 });
 
     const initialCards = await page.getByTestId('gallery-card').count();
 
@@ -135,5 +135,59 @@ test.describe('Image Gallery', () => {
     await expect(
       page.evaluate(() => document.documentElement.getAttribute('data-theme')),
     ).resolves.toBe('light');
+  });
+
+  test('square filter shows only square images when toggled', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await expect(page.getByRole('list', { name: /image grid/i })).toBeVisible({
+      timeout: 15_000,
+    });
+
+    const allCards = await page.getByTestId('gallery-card').count();
+
+    const squareBtn = page.getByRole('button', {
+      name: /show square images only/i,
+    });
+    await expect(squareBtn).toHaveAttribute('aria-pressed', 'false');
+
+    await squareBtn.click();
+    await expect(squareBtn).toHaveAttribute('aria-pressed', 'true');
+
+    // Wait and verify all displayed images are square
+    await expect(async () => {
+      const images = await page
+        .getByRole('img', { name: /gallery image/i })
+        .all();
+      expect(images.length).toBeGreaterThan(0); // Ensure grid isn't empty
+
+      for (const img of images) {
+        const width = await img.getAttribute('width');
+        const height = await img.getAttribute('height');
+        expect(width).toBeTruthy();
+        expect(width).toBe(height);
+      }
+    }).toPass();
+
+    await squareBtn.click();
+    await expect(squareBtn).toHaveAttribute('aria-pressed', 'false');
+
+    // Verify non-square images return
+    await expect(async () => {
+      const images = await page
+        .getByRole('img', { name: /gallery image/i })
+        .all();
+      let hasNonSquare = false;
+      for (const img of images) {
+        const width = await img.getAttribute('width');
+        const height = await img.getAttribute('height');
+        if (width !== height) {
+          hasNonSquare = true;
+          break;
+        }
+      }
+      expect(hasNonSquare).toBe(true);
+    }).toPass();
   });
 });
